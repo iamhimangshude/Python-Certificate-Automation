@@ -26,26 +26,33 @@ def certificate_generator(
 
 
 # Main code
-try:
-    student_name_file = input("Enter student name file path: ")
-    template_file_path = input("Enter template file path(*.png only): ")
-    color = input("Enter text color: ")
-    fontsize = int(input("Enter font size: "))
-    textXY = int(input("Enter text position X: ")), int(input("Enter text position Y: "))
+while True:
+    try:
+        student_name_file = input("Enter student name file path: ")
+        template_file_path = input("Enter template file path(*.png only): ")
+        color = input("Enter text color: ")
+        fontsize = int(input("Enter font size: "))
+        textXY = int(input("Enter text position X: ")), int(input("Enter text position Y: "))
 
-    with open(student_name_file, "r") as names:
-        name_list = names.read().split(",")
-        total = len(name_list)
-        count = 0
-        for name in name_list:
-            certificate_generator(
-                template_file_path, name.strip(), textXY, font_size=fontsize, color=color
-            )
-            count += 1
-            print(f"\rProcessing\t\t{count}/{total}")
-            
+        with open(student_name_file, "r") as names:
+            name_list = names.read().split(",")
+            total = len(name_list)
+            count = 0
+            for name in name_list:
+                certificate_generator(
+                    template_file_path, name.strip(), textXY, font_size=fontsize, color=color
+                )
+                count += 1
+                print(f"\rProcessing\t\t{count}/{total}", end=" ")
+                
 
-        print("\n\n Done! ")
-        print("💡Check at 'certificates' folder")
-except Exception as e:
-    print(f'Error: {e}')
+            print("\n\n Done! ")
+            print("💡Check at 'certificates' folder")
+            print('Again? (y/n)')
+            if input().lower() != 'y':
+                break
+    except Exception as e:
+        print(f'Error: {e}')
+        print('Retry? (y/n)')
+        if input().lower() != 'y':
+            break
