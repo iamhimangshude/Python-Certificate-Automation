@@ -35,6 +35,8 @@ while True:
         fontsize = int(input("Enter text size: "))
         textXY = int(input("Enter text position X: ")), int(input("Enter text position Y: ")) # Getting the coordinates to draw the text
         outputFolder = input("Enter output folder path: ")
+        if outputFolder == "":
+            outputFolder = ".\\"
 
         # Existence of files being checked
         if not os.path.exists(student_name_file):
@@ -47,8 +49,6 @@ while True:
             total = len(name_list)
             count = 0
             for name in name_list:
-                if outputFolder == "":
-                    outputFolder = ".\\"
                 certificate_generator(
                     template_file_path, name.strip(), textXY, font_size=fontsize, color=color, output=outputFolder
                 )
