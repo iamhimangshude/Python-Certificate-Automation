@@ -47,6 +47,8 @@ while True:
             total = len(name_list)
             count = 0
             for name in name_list:
+                if outputFolder == "":
+                    outputFolder = ".\\"
                 certificate_generator(
                     template_file_path, name.strip(), textXY, font_size=fontsize, color=color, output=outputFolder
                 )
