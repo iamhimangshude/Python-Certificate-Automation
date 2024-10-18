@@ -166,3 +166,7 @@ output
 
 # Certificate (this is exclusive)
 certificates
+*certificates
+
+# Excalidraw drawings
+*.excalidraw
