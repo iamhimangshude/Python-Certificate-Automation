@@ -170,3 +170,7 @@ certificates
 
 # Excalidraw drawings
 *.excalidraw
+
+# simple input files or data files
+*.txt
+*.csv
