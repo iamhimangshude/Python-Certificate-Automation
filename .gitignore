@@ -174,3 +174,6 @@ certificates
 # simple input files or data files
 *.txt
 *.csv
+
+# test files
+*test*.*
