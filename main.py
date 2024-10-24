@@ -1,68 +1,53 @@
-import os
+import csv, os
 from PIL import Image, ImageDraw, ImageFont
 
 
-def certificate_generator(
-    certificate_template,
-    name="Himangshu",
-    text_position: tuple = (100, 100),
-    font_name: str = "C:\\Windows\\Fonts\\ITCEDSCR.TTF",  # Edwardian Script ITC
-    font_size: int = 120,
-    color: str = "black",
-    output: str = "."
-):
-    font_object = ImageFont.truetype(font_name, font_size)
-    template_object = Image.open(certificate_template)
-    draw_object = ImageDraw.Draw(template_object)
+TEMPLATE_PATH = "D:/Pictures/Certificate-Automation/Certificate-Sample-2-hi-res-jpg.png"
 
-    draw_object.text(
-        text_position,
-        name,
-        align="m",
-        fill=color,
-        font=font_object,
+def csvDataReader(file: str = "names.csv "):
+    data_list = None
+    with open(file, "r") as names:
+        csvFile = csv.reader(names)
+        data_list = [lines for lines in csvFile]
+    return data_list
+
+
+def coordinatesReader(file: str = "coordinates.txt", fields: int = 1):
+    with open(file, "r") as coordinates:
+        coordinates_list = []
+        for i in range(fields):
+            coordinates_list.append(coordinates.readline().split(","))
+    return coordinates_list
+
+
+def certificate_drawer():
+
+    csvData = csvDataReader(input("Enter Student Names file path (csv only): "))
+    no_of_fields = len(csvData[0])
+    no_of_data = len(csvData)
+    coordinateData = coordinatesReader(
+        input("Enter Coordinates file path (txt only): "), no_of_fields
     )
-    os.makedirs(output + "certificates", exist_ok=True)
-    template_object.save(output + f"certificates\\{name}_certificate.png")
+
+    if no_of_data > 1:
+        os.makedirs("certificates", exist_ok=True) # Needs to be specified
+        for item in range(1,no_of_data):
+            template = Image.open(TEMPLATE_PATH) # Needs to change or to be made dynamic
+            font = ImageFont.truetype("C:/Windows/Fonts/ITCEDSCR.TTF", 90) # Font needs to be dynamic
+            draw = ImageDraw.Draw(template)
+            name = csvData[item][1]
+            for i in range(no_of_fields):
+                try:
+                    draw.text(
+                        xy=(int(coordinateData[i][1]), int(coordinateData[i][2])),
+                        text=csvData[item][i],
+                        fill="black", # Color needs to be dynamic
+                        stroke_width=2,
+                        font=font,)
+                except Exception as e:
+                    print(e)
+            # pass
+            template.save(f"certificates/{name.strip()}_certificate.png","PNG")
 
 
-# Main code
-while True:
-    try:
-        student_name_file = input("Enter student name file path: ")
-        template_file_path = input("Enter template file path(*.png only): ")
-        color = input("Enter text color: ")
-        fontsize = int(input("Enter text size: "))
-        textXY = int(input("Enter text position X: ")), int(input("Enter text position Y: ")) # Getting the coordinates to draw the text
-        outputFolder = input("Enter output folder path: ")
-        if outputFolder == "":
-            outputFolder = ".\\"
-
-        # Existence of files being checked
-        if not os.path.exists(student_name_file):
-            raise FileNotFoundError
-        if not os.path.exists(template_file_path):
-            raise FileNotFoundError
-
-        with open(student_name_file, "r") as names:
-            name_list = names.read().split(",")
-            total = len(name_list)
-            count = 0
-            for name in name_list:
-                certificate_generator(
-                    template_file_path, name.strip(), textXY, font_size=fontsize, color=color, output=outputFolder
-                )
-                count += 1
-                print(f"\rProcessing\t\t{count}/{total}", end=" ")
-                
-
-            print("\n\n Done! ")
-            print(f"💡Check at '{outputFolder}certificates' folder")
-            print('Again? (y/n)')
-            if input().lower() != 'y':
-                break
-    except Exception as e:
-        print(f'Error: {e}')
-        print('Retry? (y/n)')
-        if input().lower() != 'y':
-            break
+certificate_drawer()
