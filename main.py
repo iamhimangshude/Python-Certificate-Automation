@@ -3,8 +3,6 @@ import os
 from PIL import Image, ImageDraw, ImageFont
 
 
-TEMPLATE_PATH = "D:/Pictures/Certificate-Automation/Certificate-Sample-2-hi-res-jpg.png"
-
 # Function to read CSV data
 def csvDataReader(file: str = "names.csv"):
     with open(file, "r") as names:
