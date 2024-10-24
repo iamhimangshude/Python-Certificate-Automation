@@ -47,7 +47,7 @@ def certificate_drawer():
                 except Exception as e:
                     print(e)
             # pass
-            template.save(f"certificates/{item}_certificate.png","PNG")
+            template.save(f"certificates/{item}_{name}_certificate.png","PNG")
 
 
 certificate_drawer()
