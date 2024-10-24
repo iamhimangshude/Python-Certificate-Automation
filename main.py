@@ -80,4 +80,7 @@ def certificate_drawer():
 
     print(f"💡 Done!\nCertificates generated successfully!\nCheck at {output_dir}")
 
-certificate_drawer()
+while True:
+    certificate_drawer()
+    if input("Again?(y/n): ").lower() == "n":
+        break
