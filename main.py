@@ -80,5 +80,5 @@ def certificate_drawer():
 
 while True:
     certificate_drawer()
-    if input("Again?(y/n): ").lower() == "n":
+    if input("Again?(y/n): ").lower() != "y":
         break
