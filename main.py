@@ -1,5 +1,8 @@
+
 import csv
 import os
+import time
+import img2pdf
 from PIL import Image, ImageDraw, ImageFont
 
 
@@ -31,25 +34,35 @@ def attributeReader(file: str = "attributes.txt"):
 # Function to draw the certificates
 def certificate_drawer():
 
-    # Read the CSV data (names, positions, etc.)
-    csvDataPath = input("Enter Student Names file path (csv only): ")
+    csvDataPath = input("Enter Student Names file path (csv only) OR press enter to quit: ")
+    if csvDataPath == "":
+        print("Quitting...")
+        time.sleep(2)
+        exit()
     csvData = csvDataReader(csvDataPath)
     no_of_fields = len(csvData[0])
     no_of_data = len(csvData)
 
-    # Read the coordinates and other details for the text
-    attrDataPath = input("Enter Coordinates attributes path (txt only): ")
+    attrDataPath = input("Enter Attributes file path (txt only): ")
     attrData = attributeReader(attrDataPath)
 
-    # Input of template path
+
     TEMPLATE_PATH = input("Enter Certificate Template Path: ")
 
     # Output directory input
-    output_dir = input("Enter Output Directory: ")
-    output_dir += "/certificates" if not output_dir.endswith("/certificates") else ""
-    
+    output_dir = input("Enter Output Directory: ") or "."
+
+    if output_dir.endswith("/") and os.name == 'nt':
+        output_dir += "certificates"
+    elif not output_dir.endswith("/") and not output_dir.endswith(".") and os.name == 'nt':
+        output_dir += "\\certificates"
+    elif output_dir.endswith(".") and os.name == 'nt':
+        output_dir = os.getcwd() + "\\certificates"
+
     # Create attributes directory to save the generated certificates
     os.makedirs(output_dir, exist_ok=True)
+
+    generated_certificates_list = []
 
     # Loop over each student's data from the CSV
     for item in range(1, no_of_data):
@@ -74,11 +87,22 @@ def certificate_drawer():
             )
 
         # Save the certificate with the student's name as the filename
-        template.save(f"{output_dir}/{item}_certificate.png", "PNG")
+        
+        filename = f"{output_dir}\\{item}_certificate.png"
+        generated_certificates_list.append(filename)
+        template.save(filename, "PNG")
+    
+    with open(f"{output_dir}\\Generated_Certificates.pdf", "wb") as pdfFile:
+        pdfFile.write(img2pdf.convert(generated_certificates_list))
 
-    print(f"💡 Done!\nCertificates generated successfully!\nCheck at {output_dir}")
+    print(f"💡 Done!\nCertificates generated successfully along with PDF file!\nCheck at {output_dir}")
 
 while True:
-    certificate_drawer()
+    try:
+        certificate_drawer()
+    except Exception as e:
+        print(e)
     if input("Again?(y/n): ").lower() != "y":
+        print("Bye!")
+        time.sleep(2)
         break
