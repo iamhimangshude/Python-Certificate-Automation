@@ -1,0 +1,13 @@
+Field, X, Y, FontName, FontSize, Color
+Date, 2870, 713, C:\Windows\Fonts\Arial.ttf,30, blue
+Name, 473, 950, C:\Windows\Fonts\ITCEDSCR.ttf,90, red
+Event, 2410, 950, C:\Windows\Fonts\Arial.ttf,90, violet
+School, 530, 1110, C:\Windows\Fonts\Arial.ttf,90, black
+HeldAt, 500, 1245, C:\Windows\Fonts\ITCEDSCR.ttf,90, black
+From, 570, 1410, C:\Windows\Fonts\Times.ttf,90, black
+To, 1370, 1410, C:\Windows\Fonts\Times.ttf,90, black
+Age, 2050, 1410, C:\Windows\Fonts\Arial.ttf,90, black
+Gender, 2470, 1410, C:\Windows\Fonts\Arial.ttf,90, black
+Class, 440, 1590, C:\Windows\Fonts\Arial.ttf,90, black
+Position, 1320, 1590, C:\Windows\Fonts\Arial.ttf,90, green
+Date Of Birth, 725, 1740, C:\Windows\Fonts\Arial.ttf,90, black
