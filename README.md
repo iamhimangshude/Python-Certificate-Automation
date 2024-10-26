@@ -5,7 +5,7 @@ This program automates the generation of certificates, which is commonly used in
 ## ❓ How-to
 1. We need to prepare our names.csv(or any filename of our choice) and attribute.txt(or any filename of our choice). 
 
-    Click [here](github.com/HimangshuDe/Python-Certificate-Automation/tree/master/sample-files) for the sample files about preparing the required files or you can download and use those!
+    Click [here](https://github.com/HimangshuDe/Python-Certificate-Automation/tree/master/sample-files) for the sample files about preparing the required files or you can download and use those!
 
     **Note**: Make sure that the attributes.txt file is in the same format as in the sample file!!
 
